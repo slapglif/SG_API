@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Perimeter index{% endblock %}
+
+{% block body %}
+    <h1>Perimeter index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>RefNumber</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for perimeter in perimeters %}
+            <tr>
+                <td>{{ perimeter.id }}</td>
+                <td>{{ perimeter.refNumber }}</td>
+                <td>{{ perimeter.latitude }}</td>
+                <td>{{ perimeter.longitude }}</td>
+                <td>
+                    <a href="{{ path('perimeter_show', {'id': perimeter.id}) }}">show</a>
+                    <a href="{{ path('perimeter_edit', {'id': perimeter.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('perimeter_new') }}">Create new</a>
+{% endblock %}

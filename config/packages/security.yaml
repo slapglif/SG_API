@@ -1,0 +1,69 @@
+security:
+    role_hierarchy:
+        ROLE_FARRELL_TECH: [ROLE_ALLOWED_TO_SWITCH,ROLE_ADMIN,ROLE_FINANCE,ROLE_SITE_ADMIN,ROLE_OVERWATCH,ROLE_CLIENT,ROLE_GUARD]
+        ROLE_ADMIN: [ROLE_GUARD]
+        ROLE_FINANCE: [ROLE_GUARD]
+        ROLE_SITE_ADMIN: [ROLE_GUARD]
+        ROLE_OVERWATCH: [ROLE_GUARD]
+        ROLE_CLIENT:
+        ROLE_GUARD:
+    encoders:
+        App\Entity\User:
+            algorithm: auto
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        login:
+            pattern: ^/api/auth/login
+            stateless: true
+            anonymous: true
+            json_login:
+                check_path: /api/auth/login
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+        register:
+            pattern: ^/api/auth/register
+            stateless: true
+            anonymous: true
+            json_login:
+                check_path: /api/auth/register
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+
+        api:
+            pattern: ^/api
+            stateless: true
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
+        main:
+            anonymous: lazy
+            switch_user: true
+
+#        remember_me:
+#            secret: '%kernel.secret%'
+#            lifetime: 2592000
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+         - { path: ^/docs, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/api/auth/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/api/auth/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/, roles: ROLE_GUARD }
+         - { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: ^/profile, roles: ROLE_GUARD }

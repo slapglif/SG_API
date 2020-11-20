@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Perimeter{% endblock %}
+
+{% block body %}
+    <h1>Create new Perimeter</h1>
+
+    {{ include('perimeter/_form.html.twig') }}
+
+    <a href="{{ path('perimeter_index') }}">back to list</a>
+{% endblock %}

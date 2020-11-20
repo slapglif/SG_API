@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Perimeter{% endblock %}
+
+{% block body %}
+    <h1>Edit Perimeter</h1>
+
+    {{ include('perimeter/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('perimeter_index') }}">back to list</a>
+
+    {{ include('perimeter/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit CheckPoint{% endblock %}
+
+{% block body %}
+    <h1>Edit CheckPoint</h1>
+
+    {{ include('check_point/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('check_point_index') }}">back to list</a>
+
+    {{ include('check_point/_delete_form.html.twig') }}
+{% endblock %}

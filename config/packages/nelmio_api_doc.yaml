@@ -1,0 +1,18 @@
+nelmio_api_doc:
+    documentation:
+        host: symfony.localhost
+        info:
+            title: Oversight API
+            description: Documentation to be completed
+            version: 0.0.1
+        securityDefinitions:
+            Bearer:
+                type: apiKey
+                description: 'Value: Bearer {jwt}'
+                name: Authorization
+                in: header
+        security:
+            - Bearer: []
+    areas:
+        path_patterns: # an array of regexps
+            - ^/api(?!/docs$)
